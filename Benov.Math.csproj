@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Benov.MathLib</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Benovi Engineering, Ltd.</Authors>
+    <Description>Misc useful math functions</Description>
+    <Copyright>(C) Benovi Engineering, Ltd.</Copyright>
+    <PackageId>Benov.MathLib</PackageId>
+    <AssemblyName>Benov.MathLib</AssemblyName>
+  </PropertyGroup>
+
+</Project>

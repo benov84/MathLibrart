@@ -1,0 +1,7 @@
+/bin/Release/*.gitignore
+/bin/Release/netstandard2.0/*.gitignore
+/obj/*.gitignore
+/obj/Debug/*.gitignore
+/obj/Debug/netstandard2.0/*.gitignore
+/obj/Release/*.gitignore
+/obj/Release/netstandard2.0/*.gitignore
