@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <RootNamespace>Benov.MathLib</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Benovi Engineering, Ltd.</Authors>
@@ -9,6 +9,9 @@
     <Copyright>(C) Benovi Engineering, Ltd.</Copyright>
     <PackageId>Benov.MathLib</PackageId>
     <AssemblyName>Benov.MathLib</AssemblyName>
+    <AssemblyVersion>1.0.1</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
 </Project>
