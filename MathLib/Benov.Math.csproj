@@ -9,9 +9,10 @@
     <Copyright>(C) Benovi Engineering, Ltd.</Copyright>
     <PackageId>Benov.MathLib</PackageId>
     <AssemblyName>Benov.MathLib</AssemblyName>
-    <AssemblyVersion>1.0.2</AssemblyVersion>
-    <FileVersion>1.0.2</FileVersion>
-    <Version>1.0.2</Version>
+    <AssemblyVersion>1.0.3</AssemblyVersion>
+    <FileVersion>1.0.3</FileVersion>
+    <Version>1.0.3</Version>
+    <PackageReleaseNotes>Added PerpendicularOffset function</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>
