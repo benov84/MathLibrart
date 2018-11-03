@@ -232,13 +232,16 @@ namespace Benov.MathLib
         /// <param name="offset">Distance from position at 90degrees to p1 and p2- non-percetange based.</param>
         /// <param name="c">Output of the calculated point along p1 and p2. might not be necessary for the ultimate output.</param>
         /// <param name="d">Output of the calculated offset point.</param>
-        private void PerpendicularOffset(Point a, Point b, double position, double offset, out Point c, out Point d)
+        public static void PerpendicularOffset(Point a, Point b, double position, double offset, out Point c, out Point d, bool left)
         {
             //p3 is located at the x or y delta * position + p1x or p1y original.
             Point p3 = new Point(((b.x - a.x) * position) + a.x, ((b.y - a.y) * position) + a.y);
 
             //returns an angle in radians between p1 and p2 + 1.5708 (90degress).
-            double angleRadians = Math.Atan2(a.y - b.y, a.x - b.x) + 90.0.DegreeToRadian();//1.5708;
+            double angle = 90.0.DegreeToRadian();
+            if (left)
+                angle = -angle;
+            double angleRadians = Math.Atan2(a.y - b.y, a.x - b.x) + angle;//1.5708;
 
             //locates p4 at the given angle and distance from p3.
             Point p4 = new Point(p3.x + Math.Cos(angleRadians) * offset, p3.y + Math.Sin(angleRadians) * offset);
