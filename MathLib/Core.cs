@@ -3,20 +3,20 @@ using System.Text;
 
 namespace Benov.MathLib
 {
-    public class Core
+    public static class Core
     {
         public static double R0 = 200 / Math.PI;
 
         enum UnitsAngle { Radian, Grads };
         enum UnitsDistance { Meter, Centimeter, Milimeter };
 
-        public static bool IsOdd(int value)
+        public static bool IsOdd(this int value)
         {
             bool a = value % 2 != 0;
             return a;
         }
 
-        public static string NumberToRoman(int number)
+        public static string ToRoman(this int number)
         {
             // Validate
             if (number < 0 || number > 3999)
@@ -462,12 +462,12 @@ namespace Benov.MathLib
             return max;
         }
 
-        public static double DegreeToRadian(double angle)
+        public static double DegreeToRadian(this double angle)
         {
             return Math.PI * angle / 180.0;
         }
 
-        public static double RadianToDegree(double angle)
+        public static double RadianToDegree(this double angle)
         {
             return angle * (180.0 / Math.PI);
         }
@@ -481,7 +481,7 @@ namespace Benov.MathLib
             return 0;
         }
 
-        public static double FitAngle(double Angle)
+        public static double FitAngle(this double Angle)
         {
             while (Angle > 360)
                 Angle -= 360;
@@ -490,7 +490,7 @@ namespace Benov.MathLib
             return Angle;
         }
 
-        public static double RoundToFraction(double Number, double Fraction)
+        public static double RoundToFraction(this double Number, double Fraction)
         {
             return Math.Round(Number / Fraction) * Fraction;
         }
