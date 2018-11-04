@@ -265,6 +265,11 @@ namespace Benov.MathLib
                 return false;
         }
 
+        public static double PosAng(Point A, Point B)
+        {
+            return PosAng(A.x, A.y, B.x, B.y);
+        }
+
         public static double PosAng(double X1, double Y1, double X2, double Y2)
         {
             double ta, a, b, a1, ma;
@@ -294,6 +299,11 @@ namespace Benov.MathLib
                 ma = 3 * Math.PI / 2;
 
             return ma * R0;
+        }
+
+        public static double PosAngRadian(Point A, Point B)
+        {
+            return PosAngRadian(A.x, A.y, B.x, B.y);
         }
 
         public static double PosAngRadian(double X1, double Y1, double X2, double Y2)

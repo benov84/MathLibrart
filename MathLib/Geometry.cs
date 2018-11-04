@@ -362,5 +362,11 @@ namespace Benov.MathLib
                 radius = (float)Math.Sqrt(dx * dx + dy * dy);
             }
         }
+
+        public static Point PointByDirection(Point A, Point B, double Distance)
+        {
+            double direction = Core.PosAngRadian(A.x, A.y, B.x, B.y);
+            return new Point(A.x + Math.Cos(direction) * Distance, A.y + Math.Sin(direction) * Distance);
+        }
     }
 }
