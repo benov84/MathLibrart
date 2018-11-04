@@ -260,7 +260,7 @@ namespace Benov.MathLib
 
         // Find the point of intersection between
         // the lines p1 --> p2 and p3 --> p4.
-        public void FindIntersection(
+        public static void FindIntersection(
             PointF p1, PointF p2, PointF p3, PointF p4,
             out bool lines_intersect, out bool segments_intersect,
             out PointF intersection,
@@ -326,7 +326,7 @@ namespace Benov.MathLib
         }
 
         // Find a circle through the three points.
-        public void FindCircle(PointF a, PointF b, PointF c,
+        public static void FindCircle(PointF a, PointF b, PointF c,
             out PointF center, out float radius)
         {
             // Get the perpendicular bisector of (x1, y1) and (x2, y2).
