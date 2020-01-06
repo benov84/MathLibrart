@@ -368,5 +368,55 @@ namespace Benov.MathLib
             double direction = Core.PosAngRadian(A.x, A.y, B.x, B.y);
             return new Point(A.x + Math.Cos(direction) * Distance, A.y + Math.Sin(direction) * Distance);
         }
+
+        /*
+        * @return integer code for which side of the line ab c is on.  1 means
+        * left turn, -1 means right turn.  Returns
+        * 0 if all three are on a line
+        */
+        public static int findSidePointLine(
+            Point lineStart, Point lineEnd, Point testPoint)
+        {
+            if (lineEnd.x - lineStart.x == 0)
+            { // vertical line
+                if (testPoint.x < lineEnd.x)
+                {
+                    return lineEnd.y > lineStart.y ? 1 : -1;
+                }
+                if (testPoint.x > lineEnd.x)
+                {
+                    return lineEnd.y > lineStart.y ? -1 : 1;
+                }
+                return 0;
+            }
+            if (lineEnd.y - lineStart.y == 0)
+            { // horizontal line
+                if (testPoint.y < lineEnd.y)
+                {
+                    return lineEnd.x > lineStart.x ? -1 : 1;
+                }
+                if (testPoint.y > lineEnd.y)
+                {
+                    return lineEnd.x > lineStart.x ? 1 : -1;
+                }
+                return 0;
+            }
+            double slope = (lineEnd.y - lineStart.y) / (lineEnd.x - lineStart.x);
+            double yIntercept = lineStart.y - lineStart.x * slope;
+            double cSolution = (slope * testPoint.x) + yIntercept;
+            if (slope != 0)
+            {
+                if (testPoint.y > cSolution)
+                {
+                    return lineEnd.x > lineStart.x ? 1 : -1;
+                }
+                if (testPoint.y < cSolution)
+                {
+                    return lineEnd.x > lineStart.x ? -1 : 1;
+                }
+                return 0;
+            }
+            return 0;
+        }
     }
 }
