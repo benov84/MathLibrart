@@ -418,5 +418,41 @@ namespace Benov.MathLib
             }
             return 0;
         }
+
+        private static Point getPerpendicularPoint(Point lineStart, Point lineEnd, Point point)
+        {
+            var x1 = lineStart.x;
+            var y1 = lineStart.y;
+            var x2 = lineEnd.x;
+            var y2 = lineEnd.y;
+            var x3 = point.x;
+            var y3 = point.y;
+            var px = x2 - x1;
+            var py = y2 - y1;
+            var dAB = px * px + py * py;
+            var u = ((x3 - x1) * px + (y3 - y1) * py) / dAB;
+            var x = x1 + u * px;
+            var y = y1 + u * py;
+            return new Point(x, y);
+        }
+
+        public static bool PointOnLineSegment(Point pt1, Point pt2, Point pt, double epsilon = 0.001)
+        {
+            if (pt.x - Math.Max(pt1.x, pt2.x) > epsilon ||
+                Math.Min(pt1.x, pt2.x) - pt.x > epsilon ||
+                pt.y - Math.Max(pt1.y, pt2.y) > epsilon ||
+                Math.Min(pt1.y, pt2.y) - pt.y > epsilon)
+                return false;
+
+            if (Math.Abs(pt2.x - pt1.x) < epsilon)
+                return Math.Abs(pt1.x - pt.x) < epsilon || Math.Abs(pt2.x - pt.x) < epsilon;
+            if (Math.Abs(pt2.y - pt1.y) < epsilon)
+                return Math.Abs(pt1.y - pt.y) < epsilon || Math.Abs(pt2.y - pt.y) < epsilon;
+
+            double x = pt1.x + (pt.y - pt1.y) * (pt2.x - pt1.x) / (pt2.y - pt1.y);
+            double y = pt1.y + (pt.x - pt1.x) * (pt2.y - pt1.y) / (pt2.x - pt1.x);
+
+            return Math.Abs(pt.x - x) < epsilon || Math.Abs(pt.y - y) < epsilon;
+        }
     }
 }
