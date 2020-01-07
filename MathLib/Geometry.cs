@@ -495,7 +495,7 @@ namespace Benov.MathLib
                     bool lines_intersect;
                     bool segment_intersect;
                     Point pt1, pt2;
-                    FindIntersection(startPoint, endPoint, line1[i - 1], line1[i],
+                    FindIntersection(startPoint, endPoint, line2[i - 1], line2[i],
                         out lines_intersect, out segment_intersect, out IntersectionPoint2, out pt1, out pt2);
                     if (lines_intersect)
                         break;
