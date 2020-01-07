@@ -261,41 +261,41 @@ namespace Benov.MathLib
         // Find the point of intersection between
         // the lines p1 --> p2 and p3 --> p4.
         public static void FindIntersection(
-            PointF p1, PointF p2, PointF p3, PointF p4,
+            Point p1, Point p2, Point p3, Point p4,
             out bool lines_intersect, out bool segments_intersect,
-            out PointF intersection,
-            out PointF close_p1, out PointF close_p2)
+            out Point intersection,
+            out Point close_p1, out Point close_p2)
         {
             // Get the segments' parameters.
-            float dx12 = p2.X - p1.X;
-            float dy12 = p2.Y - p1.Y;
-            float dx34 = p4.X - p3.X;
-            float dy34 = p4.Y - p3.Y;
+            double dx12 = p2.x - p1.x;
+            double dy12 = p2.y - p1.y;
+            double dx34 = p4.x - p3.x;
+            double dy34 = p4.y - p3.y;
 
             // Solve for t1 and t2
-            float denominator = (dy12 * dx34 - dx12 * dy34);
+            double denominator = (dy12 * dx34 - dx12 * dy34);
 
-            float t1 =
-                ((p1.X - p3.X) * dy34 + (p3.Y - p1.Y) * dx34)
+            double t1 =
+                ((p1.x - p3.x) * dy34 + (p3.y - p1.y) * dx34)
                     / denominator;
-            if (float.IsInfinity(t1))
+            if (double.IsInfinity(t1))
             {
                 // The lines are parallel (or close enough to it).
                 lines_intersect = false;
                 segments_intersect = false;
-                intersection = new PointF(float.NaN, float.NaN);
-                close_p1 = new PointF(float.NaN, float.NaN);
-                close_p2 = new PointF(float.NaN, float.NaN);
+                intersection = new Point(float.NaN, float.NaN);
+                close_p1 = new Point(float.NaN, float.NaN);
+                close_p2 = new Point(float.NaN, float.NaN);
                 return;
             }
             lines_intersect = true;
 
-            float t2 =
-                ((p3.X - p1.X) * dy12 + (p1.Y - p3.Y) * dx12)
+            double t2 =
+                ((p3.x - p1.x) * dy12 + (p1.y - p3.y) * dx12)
                     / -denominator;
 
             // Find the point of intersection.
-            intersection = new PointF(p1.X + dx12 * t1, p1.Y + dy12 * t1);
+            intersection = new Point(p1.x + dx12 * t1, p1.y + dy12 * t1);
 
             // The segments intersect if t1 and t2 are between 0 and 1.
             segments_intersect =
@@ -321,45 +321,45 @@ namespace Benov.MathLib
                 t2 = 1;
             }
 
-            close_p1 = new PointF(p1.X + dx12 * t1, p1.Y + dy12 * t1);
-            close_p2 = new PointF(p3.X + dx34 * t2, p3.Y + dy34 * t2);
+            close_p1 = new Point(p1.x + dx12 * t1, p1.y + dy12 * t1);
+            close_p2 = new Point(p3.x + dx34 * t2, p3.y + dy34 * t2);
         }
 
         // Find a circle through the three points.
-        public static void FindCircle(PointF a, PointF b, PointF c,
-            out PointF center, out float radius)
+        public static void FindCircle(Point a, Point b, Point c,
+            out Point center, out double radius)
         {
             // Get the perpendicular bisector of (x1, y1) and (x2, y2).
-            float x1 = (b.X + a.X) / 2;
-            float y1 = (b.Y + a.Y) / 2;
-            float dy1 = b.X - a.X;
-            float dx1 = -(b.Y - a.Y);
+            double x1 = (b.x + a.x) / 2;
+            double y1 = (b.y + a.y) / 2;
+            double dy1 = b.x - a.x;
+            double dx1 = -(b.y - a.y);
 
             // Get the perpendicular bisector of (x2, y2) and (x3, y3).
-            float x2 = (c.X + b.X) / 2;
-            float y2 = (c.Y + b.Y) / 2;
-            float dy2 = c.X - b.X;
-            float dx2 = -(c.Y - b.Y);
+            double x2 = (c.x + b.x) / 2;
+            double y2 = (c.y + b.y) / 2;
+            double dy2 = c.x - b.x;
+            double dx2 = -(c.y - b.y);
 
             // See where the lines intersect.
             bool lines_intersect, segments_intersect;
-            PointF intersection, close1, close2;
+            Point intersection, close1, close2;
             FindIntersection(
-                new PointF(x1, y1), new PointF(x1 + dx1, y1 + dy1),
-                new PointF(x2, y2), new PointF(x2 + dx2, y2 + dy2),
+                new Point(x1, y1), new Point(x1 + dx1, y1 + dy1),
+                new Point(x2, y2), new Point(x2 + dx2, y2 + dy2),
                 out lines_intersect, out segments_intersect,
                 out intersection, out close1, out close2);
             if (!lines_intersect)
             {
-                center = new PointF(0, 0);
+                center = new Point(0, 0);
                 radius = 0;
             }
             else
             {
                 center = intersection;
-                float dx = center.X - a.X;
-                float dy = center.Y - a.Y;
-                radius = (float)Math.Sqrt(dx * dx + dy * dy);
+                double dx = center.x - a.x;
+                double dy = center.y - a.y;
+                radius = Math.Sqrt(dx * dx + dy * dy);
             }
         }
 
@@ -369,9 +369,14 @@ namespace Benov.MathLib
             return new Point(A.x + Math.Cos(direction) * Distance, A.y + Math.Sin(direction) * Distance);
         }
 
+        public static Point PointByDirection(Point A, double Direction, double Distance)
+        {
+            return new Point(A.x + Math.Cos(Direction) * Distance, A.y + Math.Sin(Direction) * Distance);
+        }
+
         /*
-        * @return integer code for which side of the line ab c is on.  1 means
-        * left turn, -1 means right turn.  Returns
+        * @return integer code for which side of the line ab c is on.
+        * 1 means left turn, -1 means right turn.  Returns
         * 0 if all three are on a line
         */
         public static int findSidePointLine(
@@ -453,6 +458,55 @@ namespace Benov.MathLib
             double y = pt1.y + (pt.x - pt1.x) * (pt2.y - pt1.y) / (pt2.x - pt1.x);
 
             return Math.Abs(pt.x - x) < epsilon || Math.Abs(pt.y - y) < epsilon;
+        }
+
+        public static double DistanceBetweenPolylines(List<Point> line1, List<Point> line2, double precision = 5.0)
+        {
+            //Find the direction on first line
+            double angle = Benov.MathLib.Core.PosAngRadian(line1.First(), line1.Last()) * (180.0 / Math.PI);
+            int position = findSidePointLine(line1.First(), line1.Last(), line2.First());
+            double angleLeft = angle + (position * 90);
+            double angleRight = angle - (position * 90);
+            //double step = Benov.MathLib.Core.Dist(line1.First().x, line1.First().y, line1.Last().x, line1.Last().y) / precision;
+            double result = double.MaxValue;
+            double maxDistance = Benov.MathLib.Core.Dist(line1.First().x, line1.First().y, line1.Last().x, line1.Last().y);
+            double distance = 0;
+            while (distance <= maxDistance)
+            {
+                Point testMiddle = PointByDirection(line1.First(), line1.Last(), distance);
+                Point startPoint = PointByDirection(testMiddle, angleLeft * Math.PI / 180.0, maxDistance);
+                Point endPoint = PointByDirection(testMiddle, angleRight * Math.PI / 180.0, maxDistance);
+
+                Point IntersectionPoint1 = null;
+                Point IntersectionPoint2 = null;
+
+                for (int i = 1; i < line1.Count; i++) {
+                    bool lines_intersect;
+                    bool segment_intersect;
+                    Point pt1, pt2;
+                    FindIntersection(startPoint, endPoint, line1[i - 1], line1[i], 
+                        out lines_intersect, out segment_intersect, out IntersectionPoint1, out pt1, out pt2);
+                    if (lines_intersect)
+                        break;
+                }
+
+                for (int i = 1; i < line2.Count; i++)
+                {
+                    bool lines_intersect;
+                    bool segment_intersect;
+                    Point pt1, pt2;
+                    FindIntersection(startPoint, endPoint, line1[i - 1], line1[i],
+                        out lines_intersect, out segment_intersect, out IntersectionPoint2, out pt1, out pt2);
+                    if (lines_intersect)
+                        break;
+                }
+
+                if (IntersectionPoint1 != null && IntersectionPoint2 != null &&
+                    IntersectionPoint1.DistanceTo(IntersectionPoint2) < result)
+                    result = IntersectionPoint1.DistanceTo(IntersectionPoint2);
+            }
+
+            return result;
         }
     }
 }

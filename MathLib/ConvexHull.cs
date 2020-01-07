@@ -67,6 +67,19 @@ namespace Benov.MathLib
 
         public double x, y;
 
+        //For compatibility - you can you x and y case insensitive
+        public double X
+        {
+            get { return x; }
+            set { x = value; }
+        }
+
+        public double Y
+        {
+            get { return y; }
+            set { y = value; }
+        }
+
         public Point(double x, double y)
         {
             this.x = x; this.y = y;
@@ -97,6 +110,11 @@ namespace Benov.MathLib
         public static double Area2(Point p0, Point p1, Point p2)
         {
             return p0.x * (p1.y - p2.y) + p1.x * (p2.y - p0.y) + p2.x * (p0.y - p1.y);
+        }
+
+        public double DistanceTo(Point pt2)
+        {
+            return Core.Dist(this.x, this.y, pt2.x, pt2.y);
         }
     }
 
