@@ -42,6 +42,41 @@ namespace Benov.MathLib
                 return Lpt;
         }
 
+        public static double MinDist(Point point, List<Line> lines)
+        {
+            double Lpt = double.MaxValue;
+            double Lper = double.MaxValue;
+            foreach (Line line in lines)
+            {
+                //Търсим перпендикуляр
+                double Al = Core.PosAng(line.StartPoint, line.EndPoint) + 100;
+                double Xt = point.X + 100 * Math.Cos(Al / Core.R0);
+                double Yt = point.Y + 100 * Math.Sin(Al / Core.R0);
+                double Xp, Yp;
+                int[] ip = Core.Prava(point.X, point.Y, Xt, Yt, 
+                    line.StartPoint.X, line.StartPoint.Y, line.EndPoint.X, line.EndPoint.Y, 
+                    out Xp, out Yp);
+                if (ip[1] == 1)
+                {
+                    double Ltemp = Core.Dist(point.X, point.Y, Xp, Yp);
+                    if (Ltemp < Lper)
+                        Lper = Ltemp;
+                }
+
+                //Проверяваме разстоянията до двете точки
+                double Ltemp2 = Core.Dist(point.X, point.Y, line.StartPoint.X, line.StartPoint.Y);
+                if (Ltemp2 < Lpt)
+                    Lpt = Ltemp2;
+                Ltemp2 = Core.Dist(point.X, point.Y, line.EndPoint.X, line.EndPoint.Y);
+                if (Ltemp2 < Lpt)
+                    Lpt = Ltemp2;
+            }
+            if (Lper != 0)
+                return Math.Min(Lpt, Lper);
+            else
+                return Lpt;
+        }
+
         /*
         public static double FindDistanceToSegment(PointF pt, PointF p1, PointF p2, out PointF closest)
         {
