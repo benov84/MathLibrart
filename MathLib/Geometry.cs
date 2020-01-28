@@ -413,19 +413,20 @@ namespace Benov.MathLib
         * @return integer code for which side of the line ab c is on.
         * 1 means left turn, -1 means right turn.  Returns
         * 0 if all three are on a line
+        * update: returns side enumeration
         */
-        public static int findSidePointLine(
+        public static Side PointLinePosition(
             Point lineStart, Point lineEnd, Point testPoint)
         {
             if (lineEnd.x - lineStart.x == 0)
             { // vertical line
                 if (testPoint.x < lineEnd.x)
                 {
-                    return lineEnd.y > lineStart.y ? 1 : -1;
+                    return lineEnd.y > lineStart.y ? Side.Left : Side.Right;
                 }
                 if (testPoint.x > lineEnd.x)
                 {
-                    return lineEnd.y > lineStart.y ? -1 : 1;
+                    return lineEnd.y > lineStart.y ? Side.Right : Side.Left;
                 }
                 return 0;
             }
@@ -433,11 +434,11 @@ namespace Benov.MathLib
             { // horizontal line
                 if (testPoint.y < lineEnd.y)
                 {
-                    return lineEnd.x > lineStart.x ? -1 : 1;
+                    return lineEnd.x > lineStart.x ? Side.Right : Side.Left;
                 }
                 if (testPoint.y > lineEnd.y)
                 {
-                    return lineEnd.x > lineStart.x ? 1 : -1;
+                    return lineEnd.x > lineStart.x ? Side.Left : Side.Right;
                 }
                 return 0;
             }
@@ -448,15 +449,15 @@ namespace Benov.MathLib
             {
                 if (testPoint.y > cSolution)
                 {
-                    return lineEnd.x > lineStart.x ? 1 : -1;
+                    return lineEnd.x > lineStart.x ? Side.Left : Side.Right;
                 }
                 if (testPoint.y < cSolution)
                 {
-                    return lineEnd.x > lineStart.x ? -1 : 1;
+                    return lineEnd.x > lineStart.x ? Side.Right : Side.Left;
                 }
-                return 0;
+                return Side.Straight;
             }
-            return 0;
+            return Side.Straight;
         }
 
         private static Point getPerpendicularPoint(Point lineStart, Point lineEnd, Point point)
@@ -499,9 +500,10 @@ namespace Benov.MathLib
         {
             //Find the direction on first line
             double angle = Benov.MathLib.Core.PosAngRadian(line1.First(), line1.Last()) * (180.0 / Math.PI);
-            int position = findSidePointLine(line1.First(), line1.Last(), line2.First());
-            double angleLeft = angle + (position * 90);
-            double angleRight = angle - (position * 90);
+            Side position = PointLinePosition(line1.First(), line1.Last(), line2.First());
+            double multiplier = position == Side.Left ? 1 : -1;
+            double angleLeft = angle + (multiplier * 90);
+            double angleRight = angle - (multiplier * 90);
             //double step = Benov.MathLib.Core.Dist(line1.First().x, line1.First().y, line1.Last().x, line1.Last().y) / precision;
             double result = double.MaxValue;
             double maxDistance = Benov.MathLib.Core.Dist(line1.First().x, line1.First().y, line1.Last().x, line1.Last().y);

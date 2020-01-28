@@ -15,4 +15,6 @@ namespace Benov.MathLib
             EndPoint = endPoint;
         }
     }
+
+    public enum Side { Left, Right, Straight }
 }
