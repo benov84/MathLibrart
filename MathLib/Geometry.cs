@@ -42,11 +42,11 @@ namespace Benov.MathLib
                 return Lpt;
         }
 
-        public static double MinDist(Point point, List<Line> lines)
+        public static double MinDist(Point point, List<MLLine> lines)
         {
             double Lpt = double.MaxValue;
             double Lper = double.MaxValue;
-            foreach (Line line in lines)
+            foreach (MLLine line in lines)
             {
                 //Търсим перпендикуляр
                 double Al = Core.PosAng(line.StartPoint, line.EndPoint) + 100;
