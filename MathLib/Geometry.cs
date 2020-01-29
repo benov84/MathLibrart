@@ -501,10 +501,8 @@ namespace Benov.MathLib
             //Find the direction on first line
             double angle = Benov.MathLib.Core.PosAngRadian(line1.First(), line1.Last()) * (180.0 / Math.PI);
             Side position = PointLinePosition(line1.First(), line1.Last(), line2.First());
-            double multiplier = position == Side.Left ? 1 : -1;
-            double angleLeft = angle + (multiplier * 90);
-            double angleRight = angle - (multiplier * 90);
-            //double step = Benov.MathLib.Core.Dist(line1.First().x, line1.First().y, line1.Last().x, line1.Last().y) / precision;
+            double angleLeft = angle + 90;
+            double angleRight = angle - 90;
             double result = double.MaxValue;
             double maxDistance = Benov.MathLib.Core.Dist(line1.First().x, line1.First().y, line1.Last().x, line1.Last().y);
             double distance = 0;
