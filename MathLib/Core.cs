@@ -87,7 +87,31 @@ namespace Benov.MathLib
 
             for (int j = 1; j <= N; j++)
                 P += ((PL[j, 1] + PL[j + 1, 1]) * (PL[j, 2] - PL[j + 1, 2]));
-            return Math.Abs(P / 2);
+            return Math.Abs(P / 2.0);
+        }
+
+        public static double Area(Point2D[] Corners)
+        {
+            double P = 0;
+
+            //PL[N + 1, 1] = PL[1, 1];
+            //PL[N + 1, 2] = PL[1, 2];
+
+            for (int j = 0; j < Corners.Length; j++)
+            {
+                double x1 = Corners[j].X;
+                double y1 = Corners[j].Y;
+
+                double x2 = Corners[0].X;
+                double y2 = Corners[0].Y;
+                if (j < Corners.Length - 1)
+                {
+                    x2 = Corners[j + 1].X;
+                    y2 = Corners[j + 1].Y;
+                }
+                P += ((x1 + x2) * (y2 - y1));
+            }
+            return Math.Abs(P / 2.0);
         }
 
         public static double AreaHor(double[,] PL, int N, ref double[] PLH)
