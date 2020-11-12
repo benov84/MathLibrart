@@ -401,12 +401,12 @@ namespace Benov.MathLib
         public static Point PointByDirection(Point A, Point B, double Distance)
         {
             double direction = Core.PosAngRadian(A.x, A.y, B.x, B.y);
-            return new Point(A.x + Math.Cos(direction) * Distance, A.y + Math.Sin(direction) * Distance);
+            return new Point(A.x + Math.Sin(direction) * Distance, A.y + Math.Cos(direction) * Distance);
         }
 
         public static Point PointByDirection(Point A, double Direction, double Distance)
         {
-            return new Point(A.x + Math.Cos(Direction) * Distance, A.y + Math.Sin(Direction) * Distance);
+            return new Point(A.x + Math.Sin(Direction) * Distance, A.y + Math.Cos(Direction) * Distance);
         }
 
         /*
