@@ -11,7 +11,7 @@
     <AssemblyName>Benov.MathLib</AssemblyName>
     <AssemblyVersion>1.10</AssemblyVersion>
     <FileVersion>1.10</FileVersion>
-    <Version>1.11</Version>
+    <Version>1.12</Version>
     <PackageReleaseNotes>Added PerpendicularOffset function with direction parameter</PackageReleaseNotes>
   </PropertyGroup>
 
