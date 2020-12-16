@@ -421,5 +421,16 @@ namespace Benov.MathLib
 
             throw new Exception("No solutions.");
         }
+
+        public double FindPointElevationInsideTriangle(Point3D point, Point3D point1, Point3D point2, Point3D point3)
+        {
+            double delta1 = ((point2.Y - point3.Y) * (point.X - point3.X) + (point3.X - point2.X) * (point.Y - point3.Y)) /
+                ((point2.Y - point3.Y) * (point1.X - point3.X) + (point3.X - point2.X) * (point1.Y - point3.Y));
+            double delta2 = ((point3.Y - point1.Y) * (point.X - point3.X) + (point1.X - point3.X) * (point.Y - point3.Y)) /
+                ((point2.Y - point3.Y) * (point1.X - point3.X) + (point3.X - point2.X) * (point1.Y - point3.Y));
+            double delta3 = 1 - delta1 - delta2;
+            double z = delta1 * point1.Z + delta2 * point2.Z + delta3 * point3.Z;
+            return z;
+        }
     }
 }
