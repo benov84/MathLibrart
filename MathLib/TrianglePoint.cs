@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Benov.MathLib
 {
-    enum RelPos2D
+    public enum RelPos2D
     {
         ll = 1,
         le = 2,
@@ -18,14 +18,14 @@ namespace Benov.MathLib
         ee = 0
     }
 
-    static class TrianglePointTools
+    public static class TrianglePointTools
     {
-        public static double Distance(Point2D Point1, Point2D Point2)
+        public static double Distance(Point3D Point1, Point3D Point2)
         {
             return Math.Sqrt(Math.Pow(Point1.X - Point2.X, 2) + Math.Pow(Point1.Y - Point2.Y, 2));
         }
 
-        public static RelPos2D RelativePosition(Point2D Of, Point2D To)
+        public static RelPos2D RelativePosition(Point3D Of, Point3D To)
         {
             int xRel = Of.X < To.X ? -1 : Of.X > To.X ? 1 : 0;
             int yRel = Of.Y < To.Y ? -1 : Of.Y > To.Y ? 1 : 0;
@@ -61,7 +61,7 @@ namespace Benov.MathLib
             return RelPos2D.ee; // never reached
         }
 
-        public static double TriangleArea(Point2D Point1, Point2D Point2, Point2D Point3)
+        public static double TriangleArea(Point3D Point1, Point3D Point2, Point3D Point3)
         {
             return 1 / 2d *
                 (
@@ -70,7 +70,7 @@ namespace Benov.MathLib
                 );
         }
 
-        public static bool TriangleContainsPoint(Point2D Point1, Point2D Point2, Point2D Point3, Point2D Target)
+        public static bool TriangleContainsPoint(Point3D Point1, Point3D Point2, Point3D Point3, Point3D Target)
         {
             var s = Point1.Y * Point3.X - Point1.X * Point3.Y + (Point3.Y - Point1.Y) * Target.X + (Point1.X - Point3.X) * Target.Y;
             var t = Point1.X * Point2.Y - Point1.Y * Point2.X + (Point1.Y - Point2.Y) * Target.X + (Point2.X - Point1.X) * Target.Y;
@@ -89,19 +89,19 @@ namespace Benov.MathLib
     }
 
 
-    class TrianglePointProblemSolver
+    public class TrianglePointProblemSolver
     {
         private static RelPos2D[] AllPositions = new RelPos2D[]
         {
-        RelPos2D.ee,
-        RelPos2D.eg,
-        RelPos2D.el,
-        RelPos2D.ge,
-        RelPos2D.gg,
-        RelPos2D.gl,
-        RelPos2D.le,
-        RelPos2D.lg,
-        RelPos2D.ll,
+            RelPos2D.ee,
+            RelPos2D.eg,
+            RelPos2D.el,
+            RelPos2D.ge,
+            RelPos2D.gg,
+            RelPos2D.gl,
+            RelPos2D.le,
+            RelPos2D.lg,
+            RelPos2D.ll,
         };
 
         private static RelPos2D[] NoPositions = new RelPos2D[0];
@@ -294,24 +294,24 @@ namespace Benov.MathLib
                 (array.Contains(RelPos2D.lg) && array.Contains(RelPos2D.gl));
         }
 
-        public Tuple<Point2D, Point2D, Point2D> Solve(Point2D Target, params Point2D[] Points)
+        public Tuple<Point3D, Point3D, Point3D> Solve(Point3D Target, params Point3D[] Points)
         {
-            Dictionary<Point2D, double> distanceToTarget = new Dictionary<Point2D, double>();
-            Dictionary<Point2D, RelPos2D> relativePosition = new Dictionary<Point2D, RelPos2D>();
+            Dictionary<Point3D, double> distanceToTarget = new Dictionary<Point3D, double>();
+            Dictionary<Point3D, RelPos2D> relativePosition = new Dictionary<Point3D, RelPos2D>();
             List<int> visited = new List<int>();
 
             Dictionary<RelPos2D, int> countPerPosition = new Dictionary<RelPos2D, int>()
-        {
-           {RelPos2D.ee,0},
-           {RelPos2D.eg,0},
-           {RelPos2D.el,0},
-           {RelPos2D.ge,0},
-           {RelPos2D.gg,0},
-           {RelPos2D.gl,0},
-           {RelPos2D.le,0},
-           {RelPos2D.lg,0},
-           {RelPos2D.ll,0}
-        };
+            {
+               {RelPos2D.ee,0},
+               {RelPos2D.eg,0},
+               {RelPos2D.el,0},
+               {RelPos2D.ge,0},
+               {RelPos2D.gg,0},
+               {RelPos2D.gl,0},
+               {RelPos2D.le,0},
+               {RelPos2D.lg,0},
+               {RelPos2D.ll,0}
+            };
 
             foreach (var point in Points)
             {
@@ -345,7 +345,7 @@ namespace Benov.MathLib
             var orderedPoints = Points.OrderBy(point => distanceToTarget[point]);
             bool found = false;
 
-            Point2D
+            Point3D
                 Point1 = null,
                 Point2 = null,
                 Point3 = null;
@@ -417,7 +417,7 @@ namespace Benov.MathLib
             }
 
             if (found)
-                return new Tuple<Point2D, Point2D, Point2D>(Point1, Point2, Point3);
+                return new Tuple<Point3D, Point3D, Point3D>(Point1, Point2, Point3);
 
             throw new Exception("No solutions.");
         }
